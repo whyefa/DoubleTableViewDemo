@@ -8,13 +8,15 @@
 
 import UIKit
 
-let kScreenHeight = UIScreen.mainScreen().bounds.height
-let kScreenWidth = UIScreen.mainScreen().bounds.width
-let titleIndenifier = "titleCell"
-let infoIndentifier = "infoCell"
-let kOriginX = CGFloat(120)
+
 
 class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate {
+
+    let kScreenHeight = Int(UIScreen.main.bounds.height)
+    let kScreenWidth = Int(UIScreen.main.bounds.width)
+    let titleIndenifier = "titleCell"
+    let infoIndentifier = "infoCell"
+    let kOriginX = 120
     var titleTable: UITableView!
     var infoTable: UITableView!
     var contentView: UIScrollView!
@@ -22,79 +24,82 @@ class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configTableHeader()
-         titleTable = UITableView(frame: CGRectMake(CGFloat(0), CGFloat(40), kOriginX, kScreenHeight), style: UITableViewStyle.Plain)
+        titleTable = UITableView(frame: CGRect(x: 0,y: 40,width: kOriginX,height: kScreenHeight), style: UITableViewStyle.plain)
         titleTable.dataSource = self
         titleTable.delegate = self
-        titleTable.separatorStyle = UITableViewCellSeparatorStyle.None
-        titleTable.registerClass(UITableViewCell.self, forCellReuseIdentifier: titleIndenifier)
+        titleTable.rowHeight = 50
+        titleTable.separatorStyle = .none
+        titleTable.register(UITableViewCell.self, forCellReuseIdentifier: titleIndenifier)
         self.view.addSubview(titleTable)
-        
-        contentView = UIScrollView(frame: CGRectMake(kOriginX, 40, kScreenWidth - kOriginX, kScreenHeight))
+        contentView = UIScrollView(frame: CGRect())
+        contentView = UIScrollView(frame: CGRect(x:kOriginX, y:40,width: kScreenWidth - kOriginX,height: kScreenHeight))
         contentView.delegate = self
-        contentView.contentSize = CGSizeMake(2 * kScreenWidth, kScreenHeight)
+        contentView.contentSize = CGSize(width: 2*kScreenWidth, height: kScreenHeight)
         contentView.bounces = false
         self.view.addSubview(contentView)
         
-        infoTable = UITableView(frame: CGRectMake(0, 0, 2 * kScreenWidth, kScreenHeight), style: UITableViewStyle.Plain)
+        infoTable = UITableView(frame: CGRect(x:0,y: 0, width: 2 * kScreenWidth,height: kScreenHeight), style: UITableViewStyle.plain)
         infoTable.dataSource = self
         infoTable.delegate = self
-        infoTable.separatorStyle = UITableViewCellSeparatorStyle.None
-        infoTable.registerClass(TableViewCell.self, forCellReuseIdentifier: infoIndentifier)
+        infoTable.separatorStyle = .none
+        infoTable.rowHeight = 50
+        infoTable.register(TableViewCell.self, forCellReuseIdentifier: infoIndentifier)
         contentView.addSubview(infoTable)
-        // Do any additional setup after loading the view, typically from a nib.
     }
     //MARK:头部
     func configTableHeader() {
-        var title = UILabel(frame: CGRectMake(0, 10, kOriginX, 30))
+        let title = UILabel(frame: CGRect(x: 0, y : 10, width: kOriginX, height:40))
         title.text = "标题"
-        title.textAlignment = NSTextAlignment.Center
+        title.textAlignment = NSTextAlignment.center
         self.view.addSubview(title)
+        let frame = CGRect(x: kOriginX, y: 0, width: kScreenWidth - kOriginX, height: 40)
+        infoRank = UIScrollView(frame: frame)
         
-        infoRank = UIScrollView(frame: CGRectMake(kOriginX, 0, kScreenWidth - kOriginX, 40))
-        
-        for var i = 0; i < 7; i++ {
-            var x = CGFloat(i * 50)
-            var label = UILabel(frame: CGRectMake(x, 10, 50, 30))
-            label.textAlignment = NSTextAlignment.Center
+        for i in 0...6 {
+            let x = i * 50
+            let frame = CGRect(x: x, y: 10, width: 50, height: 40)
+            let label = UILabel(frame: frame)
+            label.textAlignment = NSTextAlignment.center
             label.text = "标题"
-            label.font = UIFont.systemFontOfSize(12)
+            label.font = UIFont.systemFont(ofSize: 12)
             infoRank.addSubview(label)
         }
-        infoRank.contentSize = CGSizeMake(2*kScreenWidth, 40)
+        infoRank.contentSize = CGSize(width:2*kScreenWidth, height:40)
         self.view.addSubview(infoRank)
     }
     
     //MARK: tableView Datasource
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 40
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 40;
     }
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if tableView.isEqual(titleTable) {
-          var cell = tableView.dequeueReusableCellWithIdentifier(titleIndenifier, forIndexPath: indexPath) as! UITableViewCell
+            var cell = tableView.dequeueReusableCell(withIdentifier: titleIndenifier, for: indexPath)
             if cell.isEqual(nil) {
-                cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: titleIndenifier)
+                cell = UITableViewCell(style: .default, reuseIdentifier: titleIndenifier)
             }
             cell.textLabel!.text = "产品名称"
             if indexPath.row%2 == 1 {
                 cell.backgroundColor = UIColor(white: 0.93, alpha: 1)
             } else {
-                cell.backgroundColor = UIColor.whiteColor()
+                cell.backgroundColor = UIColor.white
             }
             return cell
         }
-        var xib: NSArray = NSBundle.mainBundle().loadNibNamed("TableViewCell", owner: self, options: nil)
-        var cell = xib.objectAtIndex(0) as! TableViewCell
-        cell.setWithData(indexPath.row)
+        let xib: NSArray = Bundle.main.loadNibNamed("TableViewCell", owner: self, options: nil)! as NSArray
+        let cell = xib.object(at: 0) as! TableViewCell
+        cell.setWithData(row: indexPath.row)
         if indexPath.row%2 == 1 {
             cell.backgroundColor = UIColor(white: 0.93, alpha: 1)
         } else {
-            cell.backgroundColor = UIColor.whiteColor()
+            cell.backgroundColor = UIColor.white
         }
         return cell
-        
     }
+
     //MARK: ScrollView Delegate 
-    func scrollViewDidScroll(scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView.isEqual(titleTable) {
             infoTable.contentOffset.y = titleTable.contentOffset.y
         }
@@ -106,14 +111,15 @@ class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate
             infoRank.contentOffset.x = scrollView.contentOffset.x
         }
     }
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let delayInSeconds = 1.0
-        let popTime = dispatch_time(DISPATCH_TIME_NOW,
-            Int64(delayInSeconds * Double(NSEC_PER_SEC))) // 1
-        dispatch_after(popTime, dispatch_get_main_queue()) { () -> Void in
-            var indexes = [indexPath]
-            self.infoTable.reloadRowsAtIndexPaths(indexes, withRowAnimation: UITableViewRowAnimation.None)
-        }
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: IndexPath) {
+//        let delayInSeconds = 1.0
+//
+//        let popTime = dispatch_time(DISPATCH_TIME_NOW,
+//            Int64(delayInSeconds * Double(NSEC_PER_SEC))) // 1
+//        dispatch_after(popTime, dispatch_get_main_queue()) { () -> Void in
+//            var indexes = [indexPath]
+//            self.infoTable.reloadRowsAtIndexPaths(indexes, withRowAnimation: UITableViewRowAnimation.None)
+//        }
     }
 
     override func didReceiveMemoryWarning() {

@@ -167,6 +167,7 @@
 				TargetAttributes = {
 					8BDBF2C11B42765A0091B411 = {
 						CreatedOnToolsVersion = 6.3.2;
+						DevelopmentTeam = 52Q9S5244E;
 					};
 					8BDBF2D61B42765A0091B411 = {
 						CreatedOnToolsVersion = 6.3.2;
@@ -350,9 +351,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 52Q9S5244E;
 				INFOPLIST_FILE = DoubleTableViewDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.dow.data;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -360,9 +365,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 52Q9S5244E;
 				INFOPLIST_FILE = DoubleTableViewDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.dow.data;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -419,6 +428,7 @@
 				8BDBF2E31B42765A0091B411 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		8BDBF2E41B42765A0091B411 /* Build configuration list for PBXNativeTarget "DoubleTableViewDemoTests" */ = {
 			isa = XCConfigurationList;
@@ -427,6 +437,7 @@
 				8BDBF2E61B42765A0091B411 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
